@@ -7,7 +7,7 @@ def read_page(reader, p):
     # extract text from page
     text = page.extract_text()
     raw_text = text.encode('unicode-escape').decode()
-    raw_text = raw_text.replace(r"-\n","").replace(r"\n"," ")
+    raw_text = raw_text.replace(r"-\n","").replace(r"\n"," ").replace(r"\u2014", "-").replace(r"\ufb01","fi").replace(r"\u2013","-").replace(r"\ufb02","fl").replace(r"\u2022", "-").replace(r"\u201c", '"').replace(r"\u201d", '"').replace(" -", '\n-')
     return raw_text
 
 def pdf_to_txt(i,f, output_dir, rewrite = False):
@@ -33,7 +33,7 @@ def pdf_to_txt(i,f, output_dir, rewrite = False):
         
         page = read_page(reader, p)
         
-        out.writelines(f"Page {p}\n")
+        out.writelines("\n")
         out.writelines(f"{page}\n")
 
     # close the open file objects
